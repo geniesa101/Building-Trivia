@@ -1,0 +1,64 @@
+var names = getColumn("World's Tallest Buildings", "Name");
+var city = getColumn("World's Tallest Buildings", "City");
+var image = getColumn("World's Tallest Buildings", "Image");
+var guessName = 0;
+var guessPlace = 0;
+images();
+
+
+onEvent("startHome", "click", function( ) {
+  setScreen("guessScreen");
+});
+
+onEvent("submit", "click", function( ) {
+  correct();
+});
+
+onEvent("tryAgain", "click", function( ) {
+  setScreen("guessScreen");
+});
+
+onEvent("homeButton", "click", function( ) {
+  images();
+  setScreen("home");
+});
+
+onEvent("incHome", "click", function( ) {
+  images();
+  setScreen("home");
+});
+
+onEvent("incTryAgain", "click", function( ) {
+  setScreen("guessScreen");
+});
+
+function images(index) {
+   index = randomNumber(0, image.length);
+  for (var i = 0; i < image.length; i++) {
+    setProperty("image1", "image", image[index]);
+  }
+   guessPlace = city[index];
+   guessName = names[index];
+}
+
+function correct() {
+  if ((guessName && guessPlace == getText("locationDropdown")) && getText("nameDropdown")) {
+    setScreen("correctScreen");
+    playSound("sound://category_alerts/vibrant_game_correct_answer_hit.mp3", false);
+  } else {
+    setScreen("incorrect");
+    playSound("sound://category_alerts/vibrant_wrong_action_hit_1.mp3", false);
+  }
+}
+//lists being used to store data from the data set
+//images used in this code are taken from the "World's Tallest Buildings" dataset
+//on code.org. 
+//place holder values used in functions 
+//"Correct" function is ran to identify if the index entered into the dropdown 
+//User submits answer when finished selecting answers from dropdown.
+//is equal to the random index selected from the images list. If so, it is correct.
+//checks if the variable index numbers are equal to the selected index numbers
+//sets variables equal to the same index number used in the image list.
+//home + reset question
+//selects random number that is equal to an index in the "image" list.
+//this number is stored as a variable named index
